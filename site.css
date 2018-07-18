@@ -10,6 +10,15 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+a.subtle {
+  color: rgba(0, 0, 0, 0.87); /* from Semantic */
+}
+
+a.subtle:hover {
+  /* preserve original color */
+  color: rgba(0, 0, 0, 0.87); /* from Semantic */
+}
+
 .footer {
   margin: 2em;
 }

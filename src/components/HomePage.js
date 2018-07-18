@@ -302,7 +302,7 @@ export default React.createClass({
                                 <input autoFocus value={ this.state.entity } ref="prompt" type="text" placeholder="#room:example.com, @user:example.com, or +group:example.com" />
                             </div>
                             <div className="four wide field">
-                                <input className="ui submit button" type="submit" value="Get link!" />
+                                <input className="ui primary button" type="submit" value="Get link!" />
                             </div>
                         </div>
                     </form>

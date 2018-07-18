@@ -21,7 +21,7 @@ export default React.createClass({
     render() {
         return (
             <div className="ui header">
-              <h1 className="title"><code><a href="/"><small className="subtle">@</small></a> to.fabric.pub</code></h1>
+              <h1 className="title"><code><a href="/"><small className="subtle">@</small></a>to.fabric.pub</code></h1>
               <img className="ui centered large image" src="img/fabric.png" alt="Fabric, the decentralized operating system" />
               <h2 className="subtitle"><small><strong>threads</strong> in the fabric</small></h2>
             </div>

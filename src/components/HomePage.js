@@ -299,7 +299,7 @@ export default React.createClass({
                     <form onSubmit={ this.onSubmit }>
                         <div className="inline fields">
                             <div className="twelve wide field">
-                                <input autoFocus value={ this.state.entity } ref="prompt" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
+                                <input autoFocus value={ this.state.entity } ref="prompt" type="text" placeholder="#room:example.com, @user:example.com, or +group:example.com" />
                             </div>
                             <div className="four wide field">
                                 <input className="ui submit button" type="submit" value="Get link!" />

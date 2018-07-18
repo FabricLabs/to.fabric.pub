@@ -20,8 +20,8 @@ import React from 'react'
 export default React.createClass({
     render() {
         return (
-            <div className="mxt_Footer">
-                Copyright 2016, 2017 <a href="https://matrix.org">Matrix.org</a>
+            <div>
+                Made with <a href="https://maki.io/">💓</a>.
             </div>
         );
     }

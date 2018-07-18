@@ -439,7 +439,7 @@ export default React.createClass({
                     </p>
                     <p>
                         Links are designed to be human-friendly, both for reading and constructing, and are
-                        essentially a compatibility step in the journey towards
+                        essentially a compatibility step in the journey towards 
                         <a href="https://dev.fabric.pub/snippets/specification.html">a <code>fabric://</code> protocol specification</a>.
                     </p>
                     <p>

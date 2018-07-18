@@ -20,7 +20,9 @@ import React from 'react'
 export default React.createClass({
     render() {
         return (
-            <div className="mxt_Header">
+            <div>
+              <h1><code>to.fabric.pub</code></h1>
+              <h2><small>hyperlinks are threads in the fabric</small></h2>
             </div>
         );
     }

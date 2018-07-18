@@ -30,7 +30,7 @@ export default React.createClass({
 
     render() {
         return (
-            <div>
+            <div className="ui center aligned segment">
                 <Header/>
                 { this.state.page }
                 <Footer/>

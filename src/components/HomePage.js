@@ -19,7 +19,7 @@ import React from 'react'
 var linkable_clients = [
     {
         name: "Grove",
-        logo: "img/grove-48px.png",
+        logo: "img/grove.jpg",
         author: "Fabric Labs",
         homepage: "https://chat.fabric.pub",
         room_url(alias)  { return "https://chat.fabric.pub/#/room/" + alias },
@@ -144,7 +144,11 @@ export default React.createClass({
     render() {
         var error;
         if (this.state.error) {
-            error = <div className="mxt_HomePage_error">{ this.state.error }</div>
+            error = (
+              <div className="ui message">
+                <p>{ this.state.error }</p>
+              </div>
+            )
         }
 
         var prompt;
@@ -183,134 +187,107 @@ export default React.createClass({
             }
 
             links = (
-                <div key="links" className="mxt_HomePage_links">
-                    <div className="mxt_HomePage_links_intro">
-                        <p>
-                            <a href="https://matrix.org">Matrix</a> is an ecosystem for open and interoperable communication.
-                        </p>
+                <div key="links" className="ui basic vertical segment">
+                    <div className="ui message">
                         <p>
                             To connect to { description }, please select an app:
                         </p>
                     </div>
 
-                    <div className="mxt_HomePage_link mxt_HomePage_link_title">
-                        <div className="mxt_HomePage_link_logo">
-                        </div>
-                        <div className="mxt_HomePage_link_name">
-                            Name
-                        </div>
-                        <div className="mxt_HomePage_link_comments">
-                            Description
-                        </div>
-                        <div className="mxt_HomePage_link_author">
-                            Author
-                        </div>
-                        <div className="mxt_HomePage_link_maturity">
-                            Maturity
-                        </div>
-                        <div className="mxt_HomePage_link_link">
-                            Access { isMsg ? "message" : <b>{ this.state.entity }</b> }
-                        </div>
-                    </div>
+                    <table className="ui table">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Access { isMsg ? "message" : <b>{ this.state.entity }</b> }</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            { linkable_clients.map((client) => {
+                                var link;
+                                if (isRoom && client.room_url) {
+                                    link = client.room_url(this.state.entity);
+                                }
+                                else if (isRoomId && client.room_id_url) {
+                                    link = client.room_id_url(this.state.entity);
+                                }
+                                else if (isUser && client.user_url) {
+                                    link = client.user_url(this.state.entity);
+                                }
+                                else if (isMsg && client.msg_url) {
+                                    link = client.msg_url(this.state.entity);
+                                }
+                                else if (isGroup && client.group_url) {
+                                    link = client.group_url(this.state.entity);
+                                }
+                                if (!link) return null;
 
-                    { linkable_clients.map((client) => {
-                        var link;
-                        if (isRoom && client.room_url) {
-                            link = client.room_url(this.state.entity);
-                        }
-                        else if (isRoomId && client.room_id_url) {
-                            link = client.room_id_url(this.state.entity);
-                        }
-                        else if (isUser && client.user_url) {
-                            link = client.user_url(this.state.entity);
-                        }
-                        else if (isMsg && client.msg_url) {
-                            link = client.msg_url(this.state.entity);
-                        }
-                        else if (isGroup && client.group_url) {
-                            link = client.group_url(this.state.entity);
-                        }
-                        if (!link) return null;
+                                return (
+                                    <tr key={ client.name }>
+                                        <td>
+                                            <a href={ link }><img className="ui tiny image" src={ client.logo }/></a>
+                                        </td>
+                                        <td>
+                                            <a href={ link }>{ client.name }</a>
+                                            <div>
+                                                <a href={ client.homepage }>{ client.homepage }</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            { client.comments }
+                                        </td>
+                                        <td>
+                                            <a href={ link }>{ link }</a>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
 
-                        return (
-                            <div key={ client.name } className="mxt_HomePage_link">
-                                <div className="mxt_HomePage_link_logo">
-                                    <a href={ link }><img src={ client.logo }/></a>
-                                </div>
-                                <div className="mxt_HomePage_link_name">
-                                    <a href={ link }>{ client.name }</a>
-                                    <div className="mxt_HomePage_link_homepage">
-                                        <a href={ client.homepage }>{ client.homepage }</a>
-                                    </div>
-                                </div>
-                                <div className="mxt_HomePage_link_comments">
-                                    { client.comments }
-                                </div>
-                                <div className="mxt_HomePage_link_author">
-                                    { client.author }
-                                </div>
-                                <div className="mxt_HomePage_link_maturity">
-                                    { client.maturity }
-                                </div>
-                                <div className="mxt_HomePage_link_link">
-                                    <a href={ link }>{ link }</a>
-                                </div>
-                            </div>
-                        );
-                    })}
-                    { unlinkable_clients.map((client) => {
-                        var instructions;
-                        if (isRoom && client.room_instructions) {
-                            instructions = client.room_instructions(this.state.entity);
-                        }
-                        else if (isUser && client.user_instructions) {
-                            instructions = client.user_instructions(this.state.entity);
-                        }
-                        else if (isMsg && client.msg_instructions) {
-                            instructions = client.msg_instructions(this.state.entity);
-                        }
-                        else if (isGroup && client.group_instructions) {
-                            instructions = client.group_instructions(this.state.entity);
-                        }
-                        if (!instructions) return null;
+                            { unlinkable_clients.map((client) => {
+                                var instructions;
+                                if (isRoom && client.room_instructions) {
+                                    instructions = client.room_instructions(this.state.entity);
+                                }
+                                else if (isUser && client.user_instructions) {
+                                    instructions = client.user_instructions(this.state.entity);
+                                }
+                                else if (isMsg && client.msg_instructions) {
+                                    instructions = client.msg_instructions(this.state.entity);
+                                }
+                                else if (isGroup && client.group_instructions) {
+                                    instructions = client.group_instructions(this.state.entity);
+                                }
+                                if (!instructions) return null;
 
-                        return (
-                            <div key={ client.name } className="mxt_HomePage_link">
-                                <div className="mxt_HomePage_link_logo">
-                                    <a href={ client.homepage }><img src={ client.logo }/></a>
-                                </div>
-                                <div className="mxt_HomePage_link_name">
-                                    <a href={ client.homepage }>{ client.name }</a>
-                                    <div className="mxt_HomePage_link_homepage">
-                                        <a href={ client.homepage }>{ client.homepage }</a>
-                                    </div>
-                                </div>
-                                <div className="mxt_HomePage_link_comments">
-                                    { client.comments }
-                                </div>
-                                <div className="mxt_HomePage_link_author">
-                                    { client.author }
-                                </div>
-                                <div className="mxt_HomePage_link_maturity">
-                                    { client.maturity }
-                                </div>
-                                <div className="mxt_HomePage_link_instructions">
-                                    { instructions }
-                                </div>
-                            </div>
-                        );
-                    })}
-
-                    <p>
-                        To add clients to this list, <a href="https://to.fabric.pub/#/#matrix-dev:matrix.org">please contact us</a> or
-                        simply send us a pull request <a href="https://github.com/matrix-org/to.fabric.pub">on github</a>!
-                    </p>
+                                return (
+                                    <tr key={ client.name }>
+                                        <td>
+                                            <a href={ client.homepage }><img className="ui tiny image" src={ client.logo }/></a>
+                                        </td>
+                                        <td>
+                                            <a href={ client.homepage }>{ client.name }</a>
+                                            <div>
+                                                <a href={ client.homepage }>{ client.homepage }</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            { client.comments }
+                                        </td>
+                                        <td>
+                                            { instructions }
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             );
 
             prompt = [
-                <div key="inputbox" className="mxt_HomePage_inputBox">
-                    <a href={ link } className="mxt_HomePage_inputBox_link">{ link }</a>
+                <div key="inputbox" className="ui basic vertical segment">
+                    <a href={ link } className="ui huge button"><i className="linkify icon"></i> { link }</a>
                     { error }
                 </div>,
                 links
@@ -318,52 +295,68 @@ export default React.createClass({
         }
         else {
             prompt = [
-                <div key="inputBox" className="mxt_HomePage_inputBox">
+                <div key="inputBox" className="ui form">
                     <form onSubmit={ this.onSubmit }>
-                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
-                        <input className="mxt_HomePage_inputBox_button" type="submit" value="Get link!" />
+                        <div className="inline fields">
+                            <div className="twelve wide field">
+                                <input autoFocus value={ this.state.entity } ref="prompt" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
+                            </div>
+                            <div className="four wide field">
+                                <input className="ui submit button" type="submit" value="Get link!" />
+                            </div>
+                        </div>
                     </form>
                     { error }
                 </div>,
-                <div key="cta" className="mxt_HomePage_cta">
-                    Create shareable links to Matrix rooms, users or messages<br/>
-                    without being tied to a specific app.
+                <div key="cta" id="cta">
+                    <h3>Shareable links for <a href="https://fabric.pub">the Fabric Network</a>.</h3>
+                    <p>Links are designed to be human-friendly, both for reading and constructing.</p>
                 </div>
             ];
         }
 
         return (
-            <div className="mxt_HomePage">
-                <a href="#">
-                    <img className="mxt_HomePage_logo" src="img/matrix-logo.svg" width="352" height="150" alt="[matrix]"/>
-                </a>
+            <div className="ui container">
 
                 { prompt }
 
-                <div className="mxt_HomePage_info">
-                    <h3>About</h3>
-                    <p>
-                        This is a simple stateless URL redirecting service
-                        which lets users share links to entities in the <a href="https://fabric.pub">Fabric
-                        </a> ecosystem without being tied to any specific app.  This lets users choose their own favorite
-                        client to participate in conversations rather than being forced to use the same app as
-                        whoever sent the link.
-                    </p>
-                    <p>
-                        The service preserves user privacy by not
-                        sharing any information about the links being followed with the server - the
-                        redirection is calculated entirely clientside using JavaScript.
-                    </p>
-                    <p>
-                        Links are designed to be human-friendly, both for reading and constructing, and are
-                        essentially a compatibility step in the journey towards
-                        <a href="https://dev.fabric.pub/snippets/specification.html">a <code>fabric://</code> protocol specification</a>.
-                    </p>
-                    <p>
-                        This service is released as open source under the terms of
-                        the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> &mdash; get the source
-                        from <a href="https://github.com/FabricLabs/to.fabric.pub">GitHub</a>.
-                    </p>
+                <div classNames="ui basic vertical segment">
+                    <table className="ui table">
+                      <thead>
+                        <tr>
+                          <th>prefix</th>
+                          <th>purpose</th>
+                          <th>example</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>@</td>
+                          <td>name</td>
+                          <td><a href="https://maki.io/people/chrisinajar"><small className="subtle">@</small>chrisinajar</a></td>
+                        </tr>
+                        <tr>
+                          <td>+</td>
+                          <td>group</td>
+                          <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs:fabric.pub</a></td>
+                        </tr>
+                        <tr>
+                          <td>#</td>
+                          <td>topic</td>
+                          <td><a href="https://maki.io/topics/learning"><small className="subtle">#</small>learning</a></td>
+                        </tr>
+                        <tr>
+                          <td>$</td>
+                          <td>symbol</td>
+                          <td><a href="https://www.roleplaygateway.com/assets/ink"><small className="subtle">$</small>INK</a></td>
+                        </tr>
+                        <tr>
+                          <td>!</td>
+                          <td>command</td>
+                          <td>oh my god <small className="subtle">!</small>erm</td>
+                        </tr>
+                      </tbody>
+                    </table>
                 </div>
             </div>
         );

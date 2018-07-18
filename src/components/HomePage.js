@@ -232,7 +232,7 @@ export default React.createClass({
 
         var prompt;
         if (this.state.showLink) {
-            var link = "https://matrix.to/#/" + this.state.entity;
+            var link = "https://to.fabric.pub/#/" + this.state.entity;
 
             var isRoom = this.isAliasValid(this.state.entity);
             var isRoomId = this.isRoomIdValid(this.state.entity);
@@ -385,8 +385,8 @@ export default React.createClass({
                     })}
 
                     <p>
-                        To add clients to this list, <a href="https://matrix.to/#/#matrix-dev:matrix.org">please contact us</a> or
-                        simply send us a pull request <a href="https://github.com/matrix-org/matrix.to">on github</a>!
+                        To add clients to this list, <a href="https://to.fabric.pub/#/#matrix-dev:matrix.org">please contact us</a> or
+                        simply send us a pull request <a href="https://github.com/matrix-org/to.fabric.pub">on github</a>!
                     </p>
                 </div>
             );
@@ -426,26 +426,26 @@ export default React.createClass({
                 <div className="mxt_HomePage_info">
                     <h3>About</h3>
                     <p>
-                        Matrix.to is a simple stateless URL redirecting service
-                        which lets users share links to entities in the <a href="https://matrix.org">Matrix.org
-                        </a> ecosystem without being tied to any specific app.  This lets users choose their own favourite
-                        Matrix client to participate in conversations rather than being forced to use the same app as
+                        This is a simple stateless URL redirecting service
+                        which lets users share links to entities in the <a href="https://fabric.pub">Fabric
+                        </a> ecosystem without being tied to any specific app.  This lets users choose their own favorite
+                        client to participate in conversations rather than being forced to use the same app as
                         whoever sent the link.
                     </p>
                     <p>
                         The service preserves user privacy by not
-                        sharing any information about the links being followed with the Matrix.to server - the
+                        sharing any information about the links being followed with the server - the
                         redirection is calculated entirely clientside using JavaScript.
                     </p>
                     <p>
                         Links are designed to be human-friendly, both for reading and constructing, and are
                         essentially a compatibility step in the journey towards
-                        a <a href="https://github.com/matrix-org/matrix-doc/issues/455">ubiquitous mx://</a> URL scheme.
+                        <a href="https://dev.fabric.pub/snippets/specification.html">a <code>fabric://</code> protocol specification</a>.
                     </p>
                     <p>
-                        As with all of Matrix, Matrix.to is released as open source under the terms of
-                        the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> - get the source
-                        from <a href="https://github.com/matrix-org/matrix.to">Github</a>.
+                        This service is released as open source under the terms of
+                        the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> &mdash; get the source
+                        from <a href="https://github.com/FabricLabs/to.fabric.pub">GitHub</a>.
                     </p>
                 </div>
             </div>

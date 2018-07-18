@@ -338,7 +338,7 @@ export default React.createClass({
                         <tr>
                           <td>+</td>
                           <td>group</td>
-                          <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs:fabric.pub</a></td>
+                          <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs</a></td>
                         </tr>
                         <tr>
                           <td>#</td>

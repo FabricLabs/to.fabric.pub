@@ -30,7 +30,7 @@ export default React.createClass({
 
     render() {
         return (
-            <div className="mxt_Site">
+            <div>
                 <Header/>
                 { this.state.page }
                 <Footer/>

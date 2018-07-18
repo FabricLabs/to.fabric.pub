@@ -18,113 +18,30 @@ import React from 'react'
 
 var linkable_clients = [
     {
-        name: "Riot",
-        logo: "img/riot-48px.png",
-        author: "Vector Creations",
-        homepage: "https://riot.im",
-        room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
-        room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
-        user_url(userId) { return "https://riot.im/app/#/user/" + userId },
-        msg_url(msg)     { return "https://riot.im/app/#/room/" + msg },
-        group_url(group)     { return "https://riot.im/app/#/group/" + group },
+        name: "Grove",
+        logo: "img/grove-48px.png",
+        author: "Fabric Labs",
+        homepage: "https://chat.fabric.pub",
+        room_url(alias)  { return "https://chat.fabric.pub/#/room/" + alias },
+        room_id_url(id)  { return "https://chat.fabric.pub/#/room/" + id },
+        user_url(userId) { return "https://chat.fabric.pub/#/user/" + userId },
+        msg_url(msg)     { return "https://chat.fabric.pub/#/room/" + msg },
+        group_url(group)     { return "https://chat.fabric.pub/#/group/" + group },
         maturity: "Stable",
-        comments: "Fully-featured Matrix client for Web, iOS & Android",
-    },
-    {
-        name: "Matrix Console",
-        logo: "img/console-48px.png",
-        author: "Matrix.org",
-        homepage: "https://matrix.org",
-        room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
-        room_id_url(id) { return "https://matrix.org/beta/#/room/" + id },
-        maturity: "Deprecated",
-        comments: "The original developer-focused client for Web, iOS & Android",
-    },
-    {
-        name: "Matrix-Static",
-        logo: "img/matrix-static-48px.png",
-        author: "Michael Telatynski",
-        homepage: "https://github.com/t3chguy/matrix-static",
-        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace('#', '%23') },
-        room_id_url(id) { return "https://view.matrix.org/room/" + id },
-        maturity: "Stable",
-        comments: "A static golang generated preview of public world readable Matrix rooms.",
-    },
+        comments: "Cross-platform chat client for Fabric.",
+    }
 ];
 
 var unlinkable_clients = [
     {
-        name: "Weechat",
-        logo: "img/weechat-48px.png",
-        author: "Tor Hveem",
-        homepage: "https://github.com/torhve/weechat-matrix-protocol-script",
-        maturity: "Late beta",
+        name: "Generic",
+        logo: "img/riot-48px.png",
+        author: "Fabric Labs",
+        homepage: "https://fabric.pub",
+        maturity: "Prototype",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "Commandline Matrix interface using Weechat",
-    },
-    {
-        name: "Quaternion",
-        logo: "img/quaternion-48px.png",
-        author: "Felix Rohrbach",
-        homepage: "https://github.com/Fxrh/Quaternion",
-        maturity: "Late alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "Qt5 and C++ cross-platform desktop Matrix client",
-    },
-    {
-        name: "Tensor",
-        logo: "img/tensor-48px.png",
-        author: "David A Roberts",
-        homepage: "https://github.com/davidar/tensor",
-        maturity: "Late alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "QML and JS cross-platform desktop Matrix client",
-    },
-    {
-        name: "NaChat",
-        logo: "img/nachat.svg",
-        author: "Benjamin Saunders",
-        homepage: "https://github.com/Ralith/nachat",
-        maturity: "Late alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-        comments: "Qt5 and C++ cross-platform desktop Matrix client",
-    },
-    {
-        name: "Nheko",
-        logo: "img/nheko.png",
-        author: "Konstantinos Sideris",
-        homepage: "https://github.com/mujx/nheko",
-        maturity: "Late alpha",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        comments: "Qt5 and C++ desktop client",
-    },
-    {
-        name: "Mclient.el",
-        logo: "",
-        author: "Ryan Rix",
-        homepage: "http://fort.kickass.systems:10082/cgit/personal/rrix/pub/matrix.el.git/",
-        maturity: "Alpha",
-        comments: "Matrix client for Gnu Emacs",
-    },
-    {
-        name: "Fractal",
-        logo: "img/org.gnome.Fractal.svg",
-        author: "Daniel Garcia Moreno",
-        maturity: "Alpha",
-        comments: "Matrix messaging app for GNOME written in Rust"
-    },
-    {
-        name: "Matrix IRCd",
-        logo: "img/ircd-48px.png",
-        author: "matrix.org",
-        homepage: "https://github.com/matrix-org/matrix-ircd",
-        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-        maturity: "Alpha",
-        comments: "Access any room anywhere in Matrix via good old IRC!",
+        comments: "Built-in Fabric link handler",
     }
 ];
 
@@ -439,7 +356,7 @@ export default React.createClass({
                     </p>
                     <p>
                         Links are designed to be human-friendly, both for reading and constructing, and are
-                        essentially a compatibility step in the journey towards 
+                        essentially a compatibility step in the journey towards
                         <a href="https://dev.fabric.pub/snippets/specification.html">a <code>fabric://</code> protocol specification</a>.
                     </p>
                     <p>

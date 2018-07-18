@@ -21,7 +21,7 @@ export default React.createClass({
     render() {
         return (
             <div>
-                Made with <a href="https://maki.io/">💓</a>.
+                Made with <a href="https://maki.io/">💓</a>
             </div>
         );
     }

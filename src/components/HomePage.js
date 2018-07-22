@@ -336,11 +336,6 @@ export default React.createClass({
                           <td><a href="https://maki.io/people/chrisinajar"><small className="subtle">@</small>chrisinajar</a></td>
                         </tr>
                         <tr>
-                          <td>+</td>
-                          <td>group</td>
-                          <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs</a></td>
-                        </tr>
-                        <tr>
                           <td>#</td>
                           <td>topic</td>
                           <td><a href="https://maki.io/topics/learning"><small className="subtle">#</small>learning</a></td>
@@ -349,6 +344,11 @@ export default React.createClass({
                           <td>$</td>
                           <td>symbol</td>
                           <td><a href="https://www.roleplaygateway.com/assets/ink"><small className="subtle">$</small>INK</a></td>
+                        </tr>
+                        <tr>
+                          <td>+</td>
+                          <td>group</td>
+                          <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs</a></td>
                         </tr>
                         <tr>
                           <td>!</td>

@@ -352,8 +352,13 @@ export default React.createClass({
                         </tr>
                         <tr>
                           <td>!</td>
-                          <td>command</td>
+                          <td>trigger</td>
                           <td>oh my god <small className="subtle">!</small>erm</td>
+                        </tr>
+                        <tr>
+                          <td>/</td>
+                          <td>command</td>
+                          <td><a href="/#/#idlerpg:verse.im"><small className="subtle">/</small>join <code>#idlerpg</code></a></td>
                         </tr>
                       </tbody>
                     </table>

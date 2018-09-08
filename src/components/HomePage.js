@@ -14,391 +14,441 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
-import { Search, Grid } from 'semantic-ui-react';
+import React from 'react'
 
-import _ from 'lodash';
-
-const source = 'https://next.maki.io/queries';
-
-const linkable_clients = [
-  {
-    name: 'Grove',
-    logo: 'img/grove.jpg',
-    author: 'Fabric Labs',
-    homepage: 'https://chat.fabric.pub',
-    room_url  (alias) { return 'https://chat.fabric.pub/#/room/' + alias; },
-    room_id_url  (id) { return 'https://chat.fabric.pub/#/room/' + id; },
-    user_url (userId) { return 'https://chat.fabric.pub/#/user/' + userId; },
-    msg_url     (msg) { return 'https://chat.fabric.pub/#/room/' + msg; },
-    group_url (group) { return 'https://chat.fabric.pub/#/group/' + group; },
-    maturity: 'Stable',
-    comments: 'Cross-platform chat client for Fabric.'
-  }
+var linkable_clients = [
+    {
+        name: "Riot",
+        logo: "img/riot-48px.png",
+        author: "Vector Creations",
+        homepage: "https://riot.im",
+        room_url(alias)  { return "https://riot.im/app/#/room/" + alias },
+        room_id_url(id)  { return "https://riot.im/app/#/room/" + id },
+        user_url(userId) { return "https://riot.im/app/#/user/" + userId },
+        msg_url(msg)     { return "https://riot.im/app/#/room/" + msg },
+        group_url(group)     { return "https://riot.im/app/#/group/" + group },
+        maturity: "Stable",
+        comments: "Fully-featured Matrix client for Web, iOS & Android",
+    },
+    {
+        name: "Matrix Console",
+        logo: "img/console-48px.png",
+        author: "Matrix.org",
+        homepage: "https://matrix.org",
+        room_url(alias) { return "https://matrix.org/beta/#/room/" + alias },
+        room_id_url(id) { return "https://matrix.org/beta/#/room/" + id },
+        maturity: "Deprecated",
+        comments: "The original developer-focused client for Web, iOS & Android",
+    },
+    {
+        name: "Matrix-Static",
+        logo: "img/matrix-static-48px.png",
+        author: "Michael Telatynski",
+        homepage: "https://github.com/t3chguy/matrix-static",
+        room_url(alias) { return "https://view.matrix.org/alias/" + alias.replace('#', '%23') },
+        room_id_url(id) { return "https://view.matrix.org/room/" + id },
+        maturity: "Stable",
+        comments: "A static golang generated preview of public world readable Matrix rooms.",
+    },
 ];
 
-const unlinkable_clients = [
-  {
-    name: 'Generic',
-    logo: 'img/riot-48px.png',
-    author: 'Fabric Labs',
-    homepage: 'https://fabric.pub',
-    maturity: 'Prototype',
-    room_instructions  (alias) { return <span>Type <code>/join <b>{ alias }</b></code></span>; },
-    user_instructions (userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span>; },
-    comments: 'Built-in Fabric link handler'
-  }
+var unlinkable_clients = [
+    {
+        name: "Weechat",
+        logo: "img/weechat-48px.png",
+        author: "Tor Hveem",
+        homepage: "https://github.com/torhve/weechat-matrix-protocol-script",
+        maturity: "Late beta",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        comments: "Commandline Matrix interface using Weechat",
+    },
+    {
+        name: "Quaternion",
+        logo: "img/quaternion-48px.png",
+        author: "Felix Rohrbach",
+        homepage: "https://github.com/Fxrh/Quaternion",
+        maturity: "Late alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        comments: "Qt5 and C++ cross-platform desktop Matrix client",
+    },
+    {
+        name: "Tensor",
+        logo: "img/tensor-48px.png",
+        author: "David A Roberts",
+        homepage: "https://github.com/davidar/tensor",
+        maturity: "Late alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        comments: "QML and JS cross-platform desktop Matrix client",
+    },
+    {
+        name: "NaChat",
+        logo: "img/nachat.svg",
+        author: "Benjamin Saunders",
+        homepage: "https://github.com/Ralith/nachat",
+        maturity: "Late alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
+        comments: "Qt5 and C++ cross-platform desktop Matrix client",
+    },
+    {
+        name: "Nheko",
+        logo: "img/nheko.png",
+        author: "Konstantinos Sideris",
+        homepage: "https://github.com/mujx/nheko",
+        maturity: "Late alpha",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        comments: "Qt5 and C++ desktop client",
+    },
+    {
+        name: "Mclient.el",
+        logo: "",
+        author: "Ryan Rix",
+        homepage: "http://fort.kickass.systems:10082/cgit/personal/rrix/pub/matrix.el.git/",
+        maturity: "Alpha",
+        comments: "Matrix client for Gnu Emacs",
+    },
+    {
+        name: "Fractal",
+        logo: "img/org.gnome.Fractal.svg",
+        author: "Daniel Garcia Moreno",
+        maturity: "Alpha",
+        comments: "Matrix messaging app for GNOME written in Rust"
+    }
+    {
+        name: "Matrix IRCd",
+        logo: "img/ircd-48px.png",
+        author: "matrix.org",
+        homepage: "https://github.com/matrix-org/matrix-ircd",
+        room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
+        maturity: "Alpha",
+        comments: "Access any room anywhere in Matrix via good old IRC!",
+    }
 ];
 
 export default React.createClass({
-  getInitialState () {
-    return {
-      error: null,
-      entity: null,
-      showLink: false
-    }
-  },
 
-  onHashChange () {
-    var entity = unescape(window.location.hash.substr(2)); // strip off #/ prefix
-    if (!entity) {
-      this.setState({
-        entity: null,
-        showLink: false,
-        error: null,
-      });
-      return;
-    }
+    getInitialState() {
+        return {
+            error: null,
+            entity: null,
+            showLink: false,
+        }
+    },
 
-    if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity) && !this.isRoomIdValid(entity) && !this.isGroupValid(entity)) {
-      this.setState({
-        entity: entity,
-        error: "Invalid room alias, user ID, message permalink or group '" + entity + "'",
-      });
-      return;
-    }
-    this.setState({
-      entity: entity,
-      showLink: true,
-      error: null,
-    });
-  },
+    onHashChange() {
+        var entity = unescape(window.location.hash.substr(2)); // strip off #/ prefix
+        if (!entity) {
+            this.setState({
+                entity: null,
+                showLink: false,
+                error: null,
+            });
+            return;
+        }
 
-  componentWillMount () {
-    if (window.location.hash) {
-      this.onHashChange();
-    }
-    this.resetComponent();
-  },
+        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isMsglinkValid(entity) && !this.isRoomIdValid(entity) && !this.isGroupValid(entity)) {
+            this.setState({
+                entity: entity,
+                error: "Invalid room alias, user ID, message permalink or group '" + entity + "'",
+            });
+            return;
+        }
+        this.setState({
+            entity: entity,
+            showLink: true,
+            error: null,
+        });
+    },
 
-  componentDidMount () {
-    window.addEventListener("hashchange", this.onHashChange);
-  },
+    componentWillMount() {
+        if (window.location.hash) {
+            this.onHashChange();
+        }
+    },
 
-  componentWillUnmount () {
-    window.removeEventListener("hashchange", this.onHashChange);
-  },
+    componentDidMount() {
+        window.addEventListener("hashchange", this.onHashChange);
+    },
 
-  onSubmit (ev) {
-    ev.preventDefault();
+    componentWillUnmount() {
+        window.removeEventListener("hashchange", this.onHashChange);
+    },
 
-    var entity = this.refs.prompt.value.trim();
-    if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isGroupValid(entity)) {
-      this.setState({ error: "Invalid room alias, user ID or group" });
-      return;
-    }
+    onSubmit(ev) {
+        ev.preventDefault();
 
-    var loc = window.location;
-    loc.hash = "#/" + entity;
-    window.location.assign(loc.href);
-    this.setState({
-      showLink: true,
-      entity: entity,
-      error: null,
-    });
-  },
+        var entity = this.refs.prompt.value.trim();
+        if (!this.isAliasValid(entity) && !this.isUserIdValid(entity) && !this.isGroupValid(entity)) {
+            this.setState({ error: "Invalid room alias, user ID or group" });
+            return;
+        }
+        var loc = window.location;
+        loc.hash = "#/" + entity;
+        window.location.assign(loc.href);
+        this.setState({
+            showLink: true,
+            entity: entity,
+            error: null,
+        });
+    },
 
-  // XXX: cargo-culted from matrix-react-sdk
-  isAliasValid (alias) {
-    // XXX: FIXME SPEC-1
-    return (alias.match(/^#([^\/:]+?):(.+)$/) && encodeURI(alias) === alias);
-  },
+    // XXX: cargo-culted from matrix-react-sdk
+    isAliasValid(alias) {
+        // XXX: FIXME SPEC-1
+        return (alias.match(/^#([^\/:]+?):(.+)$/) && encodeURI(alias) === alias);
+    },
 
-  isRoomIdValid (id) {
-    // XXX: FIXME SPEC-1
-    return (id.match(/^!([^\/:]+?):(.+)$/) && encodeURI(id) === id);
-  },
+    isRoomIdValid(id) {
+        // XXX: FIXME SPEC-1
+        return (id.match(/^!([^\/:]+?):(.+)$/) && encodeURI(id) === id);
+    },
 
-  isUserIdValid (userId) {
-    // XXX: FIXME SPEC-1
-    return (userId.match(/^@([^\/:]+?):(.+)$/) && encodeURI(userId) === userId);
-  },
+    isUserIdValid(userId) {
+        // XXX: FIXME SPEC-1
+        return (userId.match(/^@([^\/:]+?):(.+)$/) && encodeURI(userId) === userId);
+    },
 
-  isMsglinkValid (msglink) {
-    // XXX: FIXME SPEC-1
-    console.log(msglink);
-    console.log(encodeURI(msglink));
-    return (msglink.match(/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
-  },
+    isMsglinkValid(msglink) {
+        // XXX: FIXME SPEC-1
+        console.log(msglink);
+        console.log(encodeURI(msglink));
+        return (msglink.match(/^[\!#]([^\/:]+?):(.+?)\/\$([^\/:]+?):(.+?)$/) && encodeURI(msglink) === msglink);
+    },
 
-  isGroupValid (group) {
-    console.log(group);
-    console.log(encodeURI(group));
-    return (group.match(/^\+([^\/:]+?):(.+)$/) && encodeURI(group) === group);
-  },
+    isGroupValid(group) {
+        console.log(group);
+        console.log(encodeURI(group));
+        return (group.match(/^\+([^\/:]+?):(.+)$/) && encodeURI(group) === group);
+    },
 
-  resetComponent () {
-    this.setState({ isLoading: false, results: [], value: '' });
-  },
-  handleResultSelect (e, { result }) {
-    this.setState({ value: result.title })
-  },
-  handleSearchChange (e, { value }) {
-    this.setState({ isLoading: true, value });
+    render() {
+        var error;
+        if (this.state.error) {
+            error = <div className="mxt_HomePage_error">{ this.state.error }</div>
+        }
 
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
+        var prompt;
+        if (this.state.showLink) {
+            var link = "https://matrix.to/#/" + this.state.entity;
 
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.title)
+            var isRoom = this.isAliasValid(this.state.entity);
+            var isRoomId = this.isRoomIdValid(this.state.entity);
+            var isUser = this.isUserIdValid(this.state.entity);
+            var isMsg = this.isMsglinkValid(this.state.entity);
+            var isGroup = this.isGroupValid(this.state.entity);
 
-      this.setState({
-        isLoading: false,
-        results: _.filter(source, isMatch),
-      })
-    }, 300)
-  },
-  render () {
-    const { isLoading, value, results } = this.state;
+            var links;
 
-    var error;
-    if (this.state.error) {
-      error = (
-        <div className="ui message">
-          <p>{ this.state.error }</p>
-        </div>
-      )
-    }
+            // name: "Vector",
+            // logo: "",
+            // author: "Vector.im",
+            // link: "https://vector.im",
+            // room_url: "https://vector.im/beta/#/room/",
+            // user_url: "https://vector.im/beta/#/user/",
+            // maturity: "Late beta",
+            // comments: "Fully-featured Matrix client for Web, iOS & Android",
 
-    var prompt;
-    if (this.state.showLink) {
-      var link = "https://to.fabric.pub/#/" + this.state.entity;
+            var description;
+            if (isRoom) {
+                description = <span>the <b>{ this.state.entity }</b> room</span>;
+            }
+            else if (isUser) {
+                description = <span>the user <b>{ this.state.entity }</b></span>;
+            }
+            else if (isMsg) {
+                description = <span><b>this message</b></span>;
+            }
+            else if (isGroup) {
+                description = <span>the <b>{ this.state.entity }</b> group</span>;
+            }
 
-      var isRoom = this.isAliasValid(this.state.entity);
-      var isRoomId = this.isRoomIdValid(this.state.entity);
-      var isUser = this.isUserIdValid(this.state.entity);
-      var isMsg = this.isMsglinkValid(this.state.entity);
-      var isGroup = this.isGroupValid(this.state.entity);
-
-      var links;
-
-      // name: "Vector",
-      // logo: "",
-      // author: "Vector.im",
-      // link: "https://vector.im",
-      // room_url: "https://vector.im/beta/#/room/",
-      // user_url: "https://vector.im/beta/#/user/",
-      // maturity: "Late beta",
-      // comments: "Fully-featured Matrix client for Web, iOS & Android",
-
-      var description;
-      if (isRoom) {
-        description = <span>the <b>{ this.state.entity }</b> room</span>;
-      }
-      else if (isUser) {
-        description = <span>the user <b>{ this.state.entity }</b></span>;
-      }
-      else if (isMsg) {
-        description = <span><b>this message</b></span>;
-      }
-      else if (isGroup) {
-        description = <span>the <b>{ this.state.entity }</b> group</span>;
-      }
-
-      links = (
-        <div key="links" className="ui basic vertical segment">
-          <div className="ui message">
-            <p>To connect to { description }, please select an app:</p>
-          </div>
-
-          <table className="ui table">
-            <thead>
-              <tr>
-                <th>&nbsp;</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Access { isMsg ? 'message' : <b>{ this.state.entity }</b> }</th>
-              </tr>
-            </thead>
-            <tbody>
-              { linkable_clients.map((client) => {
-                let link = null;
-
-                if (isRoom && client.room_url) {
-                  link = client.room_url(this.state.entity);
-                } else if (isRoomId && client.room_id_url) {
-                  link = client.room_id_url(this.state.entity);
-                } else if (isUser && client.user_url) {
-                  link = client.user_url(this.state.entity);
-                } else if (isMsg && client.msg_url) {
-                  link = client.msg_url(this.state.entity);
-                } else if (isGroup && client.group_url) {
-                  link = client.group_url(this.state.entity);
-                }
-
-                if (!link) return null;
-
-                return (
-                  <tr key={client.name}>
-                    <td> <a href={link}><img className="ui tiny image" src={client.logo} /></a></td>
-                    <td>
-                      <a href={link}>{client.name}</a>
-                      <div><a href={client.homepage}>{client.homepage}</a></div>
-                    </td>
-                    <td>{ client.comments }</td>
-                    <td><a href={link}>{link}</a></td>
-                  </tr>
-                );
-              })}
-
-              { unlinkable_clients.map((client) => {
-                let instructions = null;
-
-                if (isRoom && client.room_instructions) {
-                  instructions = client.room_instructions(this.state.entity);
-                } else if (isUser && client.user_instructions) {
-                  instructions = client.user_instructions(this.state.entity);
-                } else if (isMsg && client.msg_instructions) {
-                  instructions = client.msg_instructions(this.state.entity);
-                } else if (isGroup && client.group_instructions) {
-                  instructions = client.group_instructions(this.state.entity);
-                }
-
-                if (!instructions) return null;
-
-                return (
-                  <tr key={client.name}>
-                    <td>
-                      <a href={client.homepage}><img className="ui tiny image" src={client.logo} /></a>
-                    </td>
-                    <td>
-                      <a href={client.homepage}>{client.name}</a>
-                      <div><a href={client.homepage}>{client.homepage}</a></div>
-                    </td>
-                    <td>{client.comments}</td>
-                    <td>{instructions}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      );
-
-      prompt = [
-        <div key="inputbox" className="ui basic vertical segment">
-          <a href={link} className="ui huge button"><i className="linkify icon"></i> {link}</a>
-          {error}
-        </div>,
-        links
-      ];
-    } else {
-      prompt = [
-        <div key="inputBox" className="ui form">
-          <Grid>
-            <Grid.Column width={6}>
-              <Search
-                autoFocus
-                loading={isLoading}
-                onResultSelect={this.handleResultSelect}
-                onSearchChange={this.handleSearchChange}
-                results={results}
-                value={this.state.entity}
-                placeholder="#room:example.com, @user:example.com, or +group:example.com"
-                {...this.props} />
-            </Grid.Column>
-          </Grid>
-          <form onSubmit={this.onSubmit}>
-            <div className="inline fields">
-              <div className="six wide field">
-                <input autoFocus value={this.state.entity} ref="prompt" type="text" placeholder="#room:example.com, @user:example.com, or +group:example.com" />
-              </div>
-              <div className="four wide field">
-                <input className="ui primary button" type="submit" value="Get link!" />
-              </div>
-            </div>
-          </form>
-          {error}
-        </div>,
-        <div key="cta" id="cta">
-          <h3>Shareable links for <a href="https://fabric.pub">the Fabric Network</a>.</h3>
-          <p>Links are designed to be human-friendly, both for reading and constructing.</p>
-        </div>
-      ];
-    }
-
-    return (
-      <div className="ui container">
-
-        { prompt }
-
-        <div classNames="ui basic vertical segment">
-          <table className="ui table">
-            <thead>
-              <tr>
-                <th>prefix</th>
-                <th>purpose</th>
-                <th>example</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>@</td>
-                <td>name</td>
-                <td><a href="https://maki.io/people/chrisinajar"><small className="subtle">@</small>chrisinajar</a></td>
-              </tr>
-              <tr>
-                <td>#</td>
-                <td>topic</td>
-                <td><a href="https://maki.io/topics/learning"><small className="subtle">#</small>learning</a></td>
-              </tr>
-              <tr>
-                <td>$</td>
-                <td>symbol</td>
-                <td><a href="https://www.roleplaygateway.com/assets/ink"><small className="subtle">$</small>INK</a></td>
-              </tr>
-              <tr>
-                <td>+</td>
-                <td>group</td>
-                <td><a href="https://chat.fabric.pub/#/group/+labs:fabric.pub"><small className="subtle">+</small>labs</a></td>
-              </tr>
-              <tr>
-                <td>!</td>
-                <td>trigger</td>
-                <td>
-                  <div className="ui comments">
-                    <div className="comment">
-                      <div className="author"><small className="subtle">@</small>martindale</div>
-                      <div className="content">oh my god <small className="subtle">!</small>erm</div>
-                      <div className="comments">
-                        <div className="comment">
-                          <div className="author"><small className="subtle">@</small>snarl</div>
-                          <div className="content">ER MAH GERD</div>
-                        </div>
-                      </div>
+            links = (
+                <div key="links" className="mxt_HomePage_links">
+                    <div className="mxt_HomePage_links_intro">
+                        <p>
+                            <a href="https://matrix.org">Matrix</a> is an ecosystem for open and interoperable communication.
+                        </p>
+                        <p>
+                            To connect to { description }, please select an app:
+                        </p>
                     </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>/</td>
-                <td>command</td>
-                <td><a href="/#/#idlerpg:verse.im"><small className="subtle">/</small>join <code>#idlerpg</code></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
+
+                    <div className="mxt_HomePage_link mxt_HomePage_link_title">
+                        <div className="mxt_HomePage_link_logo">
+                        </div>
+                        <div className="mxt_HomePage_link_name">
+                            Name
+                        </div>
+                        <div className="mxt_HomePage_link_comments">
+                            Description
+                        </div>
+                        <div className="mxt_HomePage_link_author">
+                            Author
+                        </div>
+                        <div className="mxt_HomePage_link_maturity">
+                            Maturity
+                        </div>
+                        <div className="mxt_HomePage_link_link">
+                            Access { isMsg ? "message" : <b>{ this.state.entity }</b> }
+                        </div>
+                    </div>
+
+                    { linkable_clients.map((client) => {
+                        var link;
+                        if (isRoom && client.room_url) {
+                            link = client.room_url(this.state.entity);
+                        }
+                        else if (isRoomId && client.room_id_url) {
+                            link = client.room_id_url(this.state.entity);
+                        }
+                        else if (isUser && client.user_url) {
+                            link = client.user_url(this.state.entity);
+                        }
+                        else if (isMsg && client.msg_url) {
+                            link = client.msg_url(this.state.entity);
+                        }
+                        else if (isGroup && client.group_url) {
+                            link = client.group_url(this.state.entity);
+                        }
+                        if (!link) return null;
+
+                        return (
+                            <div key={ client.name } className="mxt_HomePage_link">
+                                <div className="mxt_HomePage_link_logo">
+                                    <a href={ link }><img src={ client.logo }/></a>
+                                </div>
+                                <div className="mxt_HomePage_link_name">
+                                    <a href={ link }>{ client.name }</a>
+                                    <div className="mxt_HomePage_link_homepage">
+                                        <a href={ client.homepage }>{ client.homepage }</a>
+                                    </div>
+                                </div>
+                                <div className="mxt_HomePage_link_comments">
+                                    { client.comments }
+                                </div>
+                                <div className="mxt_HomePage_link_author">
+                                    { client.author }
+                                </div>
+                                <div className="mxt_HomePage_link_maturity">
+                                    { client.maturity }
+                                </div>
+                                <div className="mxt_HomePage_link_link">
+                                    <a href={ link }>{ link }</a>
+                                </div>
+                            </div>
+                        );
+                    })}
+                    { unlinkable_clients.map((client) => {
+                        var instructions;
+                        if (isRoom && client.room_instructions) {
+                            instructions = client.room_instructions(this.state.entity);
+                        }
+                        else if (isUser && client.user_instructions) {
+                            instructions = client.user_instructions(this.state.entity);
+                        }
+                        else if (isMsg && client.msg_instructions) {
+                            instructions = client.msg_instructions(this.state.entity);
+                        }
+                        else if (isGroup && client.group_instructions) {
+                            instructions = client.group_instructions(this.state.entity);
+                        }
+                        if (!instructions) return null;
+
+                        return (
+                            <div key={ client.name } className="mxt_HomePage_link">
+                                <div className="mxt_HomePage_link_logo">
+                                    <a href={ client.homepage }><img src={ client.logo }/></a>
+                                </div>
+                                <div className="mxt_HomePage_link_name">
+                                    <a href={ client.homepage }>{ client.name }</a>
+                                    <div className="mxt_HomePage_link_homepage">
+                                        <a href={ client.homepage }>{ client.homepage }</a>
+                                    </div>
+                                </div>
+                                <div className="mxt_HomePage_link_comments">
+                                    { client.comments }
+                                </div>
+                                <div className="mxt_HomePage_link_author">
+                                    { client.author }
+                                </div>
+                                <div className="mxt_HomePage_link_maturity">
+                                    { client.maturity }
+                                </div>
+                                <div className="mxt_HomePage_link_instructions">
+                                    { instructions }
+                                </div>
+                            </div>
+                        );
+                    })}
+
+                    <p>
+                        To add clients to this list, <a href="https://matrix.to/#/#matrix-dev:matrix.org">please contact us</a> or
+                        simply send us a pull request <a href="https://github.com/matrix-org/matrix.to">on github</a>!
+                    </p>
+                </div>
+            );
+
+            prompt = [
+                <div key="inputbox" className="mxt_HomePage_inputBox">
+                    <a href={ link } className="mxt_HomePage_inputBox_link">{ link }</a>
+                    { error }
+                </div>,
+                links
+            ];
+        }
+        else {
+            prompt = [
+                <div key="inputBox" className="mxt_HomePage_inputBox">
+                    <form onSubmit={ this.onSubmit }>
+                        <input autoFocus className="mxt_HomePage_inputBox_prompt" value={ this.state.entity } ref="prompt" size="36" type="text" placeholder="#room:example.com, @user:example.com or +group:example.com" />
+                        <input className="mxt_HomePage_inputBox_button" type="submit" value="Get link!" />
+                    </form>
+                    { error }
+                </div>,
+                <div key="cta" className="mxt_HomePage_cta">
+                    Create shareable links to Matrix rooms, users or messages<br/>
+                    without being tied to a specific app.
+                </div>
+            ];
+        }
+
+        return (
+            <div className="mxt_HomePage">
+                <a href="#">
+                    <img className="mxt_HomePage_logo" src="img/matrix-logo.svg" width="352" height="150" alt="[matrix]"/>
+                </a>
+
+                { prompt }
+
+                <div className="mxt_HomePage_info">
+                    <h3>About</h3>
+                    <p>
+                        Matrix.to is a simple stateless URL redirecting service
+                        which lets users share links to entities in the <a href="https://matrix.org">Matrix.org
+                        </a> ecosystem without being tied to any specific app.  This lets users choose their own favourite
+                        Matrix client to participate in conversations rather than being forced to use the same app as
+                        whoever sent the link.
+                    </p>
+                    <p>
+                        The service preserves user privacy by not
+                        sharing any information about the links being followed with the Matrix.to server - the
+                        redirection is calculated entirely clientside using JavaScript.
+                    </p>
+                    <p>
+                        Links are designed to be human-friendly, both for reading and constructing, and are
+                        essentially a compatibility step in the journey towards
+                        a <a href="https://github.com/matrix-org/matrix-doc/issues/455">ubiquitous mx://</a> URL scheme.
+                    </p>
+                    <p>
+                        As with all of Matrix, Matrix.to is released as open source under the terms of
+                        the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> - get the source
+                        from <a href="https://github.com/matrix-org/matrix.to">Github</a>.
+                    </p>
+                </div>
+            </div>
+        );
+    }
 })

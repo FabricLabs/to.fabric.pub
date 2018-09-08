@@ -1,7 +1,7 @@
 {
-  "name": "to-pub",
-  "version": "0.0.1",
-  "description": "Stateless privacy-protecting URL redirecting service for the Matrix.org ecosystem",
+  "name": "@fabric/teleport",
+  "version": "0.0.1-pre",
+  "description": "Stateless privacy-protecting URL redirecting service for the Fabric ecosystem",
   "main": "src/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack -p src/index.js bundle.js",
@@ -13,15 +13,16 @@
     "type": "git",
     "url": "git+https://github.com/FabricLabs/to.fabric.pub.git"
   },
-  "author": "Matrix.org",
-  "license": "Apache-2.0",
+  "author": "Fabric Labs",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FabricLabs/to.fabric.pub/issues"
   },
   "homepage": "https://to.fabric.pub",
   "dependencies": {
     "react": "^15.0.1",
-    "react-dom": "^15.0.2"
+    "react-dom": "^15.0.2",
+    "semantic-ui-react": "^0.82.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

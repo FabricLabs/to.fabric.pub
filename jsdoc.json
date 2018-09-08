@@ -1,0 +1,9 @@
+{
+  "name": "@fabric/teleport",
+  "source": "https://github.com/FabricLabs/to.fabric.pub",
+  "templates": {
+    "default": {
+      "layoutFile": "assets/docs.tmpl"
+    }
+  }
+}

@@ -56,7 +56,23 @@ export default React.createClass({
     },
 
     onHashChange() {
-        var entity = unescape(window.location.hash.substr(2)); // strip off #/ prefix
+        var entity = null;
+        switch (window.location.hash.charAt(1)) {
+          default:
+            entity = unescape(window.location.hash);
+            break;
+          case '/':
+            entity = unescape(window.location.hash.substr(2));
+            break;
+          // handles
+          case '@':
+            entity = unescape(window.location.hash.substr(1));
+            break;
+          // groups
+          case '+':
+            entity = unescape(window.location.hash.substr(1));
+            break;
+        }
         if (!entity) {
             this.setState({
                 entity: null,

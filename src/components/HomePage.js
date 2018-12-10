@@ -29,15 +29,39 @@ var linkable_clients = [
         group_url(group)     { return "https://chat.fabric.pub/#/group/" + group },
         maturity: "Stable",
         comments: "Cross-platform chat client for Fabric.",
-    }
+    }, {
+        name: "Verse",
+        logo: "img/verse.png",
+        author: "Fabric Labs",
+        homepage: "https://chat.verse.im",
+        room_url(alias)  { return "https://chat.verse.im/#/room/" + alias },
+        room_id_url(id)  { return "https://chat.verse.im/#/room/" + id },
+        user_url(userId) { return "https://chat.verse.im/#/user/" + userId },
+        msg_url(msg)     { return "https://chat.verse.im/#/room/" + msg },
+        group_url(group)     { return "https://chat.verse.im/#/group/" + group },
+        maturity: "Stable",
+        comments: "Virtual world simulator.",
+    },{
+        name: "RPG",
+        logo: "img/rpg.png",
+        author: "Quill, Inc.",
+        homepage: "https://chat.roleplaygateway.com",
+        room_url(alias)  { return "https://chat.roleplaygateway.com/#/room/" + alias },
+        room_id_url(id)  { return "https://chat.roleplaygateway.com/#/room/" + id },
+        user_url(userId) { return "https://chat.roleplaygateway.com/#/user/" + userId },
+        msg_url(msg)     { return "https://chat.roleplaygateway.com/#/room/" + msg },
+        group_url(group)     { return "https://chat.roleplaygateway.com/#/group/" + group },
+        maturity: "Stable",
+        comments: "Founding community of Verse.",
+    }    
 ];
 
 var unlinkable_clients = [
     {
         name: "Generic",
-        logo: "img/riot-48px.png",
+        logo: "img/fabric.png",
         author: "Fabric Labs",
-        homepage: "https://fabric.pub",
+        homepage: "fabric://fabric.pub",
         maturity: "Prototype",
         room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
         user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
@@ -169,7 +193,7 @@ export default React.createClass({
 
         var prompt;
         if (this.state.showLink) {
-            var link = "https://to.fabric.pub/#/" + this.state.entity;
+            var link = "https://to.fabric.pub/#" + this.state.entity.substr(1);
 
             var isRoom = this.isAliasValid(this.state.entity);
             var isRoomId = this.isRoomIdValid(this.state.entity);

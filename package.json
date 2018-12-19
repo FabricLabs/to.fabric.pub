@@ -1,11 +1,11 @@
 {
-  "name": "to-pub",
+  "name": "@fabric/portal",
   "version": "0.0.1",
-  "description": "Stateless privacy-protecting URL redirecting service for the Matrix.org ecosystem",
+  "description": "Search through and explore Fabric.",
   "main": "src/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack -p src/index.js bundle.js",
-    "start": "webpack -w src/index.js bundle.js",
+    "start": "npm run build && ecstatic .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm bundle.js bundle.js.map"
   },
@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/FabricLabs/to.fabric.pub.git"
   },
-  "author": "Matrix.org",
-  "license": "Apache-2.0",
+  "author": "Fabric Labs",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FabricLabs/to.fabric.pub/issues"
   },
@@ -31,6 +31,7 @@
     "babel-preset-react": "^6.5.0",
     "cross-env": "^5.0.5",
     "source-map-loader": "^0.1.5",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "webpack-cli": "^3.1.2"
   }
 }

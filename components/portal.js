@@ -2,12 +2,12 @@ import React from 'react';
 
 import Header from './header';
 import Footer from './footer';
-import HomePage from './home';
+import App from './app';
 
 export default React.createClass({
   getInitialState () {
     return {
-      page: <HomePage />
+      page: <App />
     };
   },
 
@@ -20,4 +20,4 @@ export default React.createClass({
       </div>
     );
   }
-})
+});

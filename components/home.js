@@ -257,7 +257,7 @@ export default React.createClass({
                       { client.comments }
                     </td>
                     <td>
-                      <a href={ link }>{ link }</a>
+                      <a href={ link } className="ui icon right labeled primary button">Open in {client.name}<i className="right chevron icon"></i></a>
                     </td>
                   </tr>
                 );
@@ -305,7 +305,7 @@ export default React.createClass({
 
       prompt = [
         <div key="inputbox" className="ui basic vertical segment">
-          <a href={ link } className="ui huge button"><i className="linkify icon"></i> { link }</a>
+          <a href={ link } className="ui huge secondary button"><i className="linkify icon"></i> { link }</a>
           { error }
         </div>,
         links

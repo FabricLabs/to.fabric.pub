@@ -3,6 +3,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import Site from '../components/portal';
+import Portal from '../components/portal';
 
-ReactDOM.render(<Site />, document.getElementById('site'));
+ReactDOM.render(<Portal inline />, document.getElementById('site'));

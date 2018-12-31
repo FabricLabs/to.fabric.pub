@@ -1,10 +1,12 @@
+'use strict';
+
 import React from 'react';
 
 const clients = {
   linkable: [
     {
       name: 'Grove',
-      logo: 'img/grove.jpg',
+      logo: 'images/grove.jpg',
       author: 'Fabric Labs',
       homepage: 'https://chat.fabric.pub',
       room_url (alias) { return 'https://chat.fabric.pub/#/room/' + alias; },
@@ -17,7 +19,7 @@ const clients = {
     },
     {
       name: 'Verse',
-      logo: 'img/verse.png',
+      logo: 'images/verse.png',
       author: 'Fabric Labs',
       homepage: 'https://chat.verse.im',
       room_url (alias) { return 'https://chat.verse.im/#/room/' + alias; },
@@ -30,7 +32,7 @@ const clients = {
     },
     {
       name: 'RPG',
-      logo: 'img/rpg.png',
+      logo: 'images/rpg.png',
       author: 'Quill, Inc.',
       homepage: 'https://chat.roleplaygateway.com',
       room_url (alias) { return 'https://chat.roleplaygateway.com/#/room/' + alias; },
@@ -45,16 +47,16 @@ const clients = {
   unlinkable: [
     {
       name: 'Generic',
-      logo: 'img/fabric.png',
+      logo: 'images/fabric.png',
       author: 'Fabric Labs',
       homepage: 'fabric://fabric.pub',
       maturity: 'Prototype',
-      room_instructions(alias)  { return <span>Type <code>/join <b>{ alias }</b></code></span> },
-      user_instructions(userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span> },
-      comments: 'Built-in Fabric link handler',
+      room_instructions (alias) { return <span>Type <code>/join <b>{ alias }</b></code></span>; },
+      user_instructions (userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span>; },
+      comments: 'Built-in Fabric link handler'
     }
   ]
-}
+};
 
 export default React.createClass({
   getInitialState () {
@@ -83,6 +85,7 @@ export default React.createClass({
         entity = unescape(window.location.hash.substr(1));
         break;
     }
+
     if (!entity) {
       this.setState({
         entity: null,
@@ -244,24 +247,16 @@ export default React.createClass({
 
                 return (
                   <tr key={ client.name }>
-                    <td>
-                      <a href={ link }><img className="ui tiny image" src={ client.logo }/></a>
-                    </td>
+                    <td><a href={ link }><img inline className="ui tiny image" src={ client.logo }/></a></td>
                     <td>
                       <a href={ link }>{ client.name }</a>
-                      <div>
-                        <a href={ client.homepage }>{ client.homepage }</a>
-                      </div>
+                      <div><a href={ client.homepage }>{ client.homepage }</a></div>
                     </td>
-                    <td>
-                      { client.comments }
-                    </td>
-                    <td>
-                      <a href={ link } className="ui icon right labeled primary button">Open in {client.name}<i className="right chevron icon"></i></a>
-                    </td>
+                    <td>{ client.comments }</td>
+                    <td><a href={ link } className="ui icon right labeled primary button">Open in {client.name}<i className="right chevron icon"></i></a></td>
                   </tr>
                 );
-              })}
+              }) }
 
               { clients.unlinkable.map((client) => {
                 var instructions;

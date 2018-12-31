@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 
 export default React.createClass({
@@ -5,9 +7,9 @@ export default React.createClass({
     return (
       <div className="ui header">
         <h1 className="title"><code><a href="/" className="subtle"><small className="subtle prefix">@</small>to.fabric.pub</a></code></h1>
-        <img className="ui centered massive image" src="img/fabric.png" alt="Fabric, the decentralized operating system" />
+        <img inline className="ui centered massive image" src="/images/fabric.png" alt="Fabric, the decentralized operating system" />
         <h2 className="subtle subtitle"><small><strong>threads</strong> in the fabric</small></h2>
       </div>
     );
   }
-})
+});

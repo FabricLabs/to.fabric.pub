@@ -1,5 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+'use strict';
+
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   module: {
@@ -17,6 +19,12 @@ module.exports = {
         ]
       }
     ]
+  },
+  output: {
+    filename: 'assets/to.fabric.pub.js',
+    auxiliaryComment: {
+      root: '# Hello, world!'
+    }
   },
   plugins: [
     new webpack.DefinePlugin({

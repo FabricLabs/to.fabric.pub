@@ -15,7 +15,8 @@ module.exports = {
         loader: 'babel-loader?presets[]=es2015&presets[]=react',
         include: [
           path.resolve('./src'),
-          path.resolve('./components')
+          path.resolve('./clients'),
+          path.resolve('./components'),
         ]
       }
     ]

@@ -1,60 +1,24 @@
 'use strict';
 
 import React from 'react';
+import { render } from 'react-dom';
+
+// Client Definitions
+import Generic from '../clients/generic';
+import Grove from '../clients/grove';
+import RPG from '../clients/rpg';
+import Element from '../clients/element';
+import VERSE from '../clients/verse';
 
 const clients = {
   linkable: [
-    {
-      name: 'Grove',
-      logo: 'images/grove.jpg',
-      author: 'Fabric Labs',
-      homepage: 'https://chat.fabric.pub',
-      room_url (alias) { return 'https://chat.fabric.pub/#/room/' + alias; },
-      room_id_url (id) { return 'https://chat.fabric.pub/#/room/' + id; },
-      user_url (userId) { return 'https://chat.fabric.pub/#/user/' + userId; },
-      msg_url (msg) { return 'https://chat.fabric.pub/#/room/' + msg; },
-      group_url (group) { return 'https://chat.fabric.pub/#/group/' + group; },
-      maturity: 'Stable',
-      comments: 'Cross-platform chat client for Fabric.'
-    },
-    {
-      name: 'Verse',
-      logo: 'images/verse.png',
-      author: 'Fabric Labs',
-      homepage: 'https://chat.verse.im',
-      room_url (alias) { return 'https://chat.verse.im/#/room/' + alias; },
-      room_id_url (id) { return 'https://chat.verse.im/#/room/' + id; },
-      user_url (userId) { return 'https://chat.verse.im/#/user/' + userId; },
-      msg_url (msg) { return 'https://chat.verse.im/#/room/' + msg; },
-      group_url (group) { return 'https://chat.verse.im/#/group/' + group; },
-      maturity: 'Stable',
-      comments: 'Virtual world simulator.'
-    },
-    {
-      name: 'RPG',
-      logo: 'images/rpg.png',
-      author: 'Quill, Inc.',
-      homepage: 'https://chat.roleplaygateway.com',
-      room_url (alias) { return 'https://chat.roleplaygateway.com/#/room/' + alias; },
-      room_id_url (id) { return 'https://chat.roleplaygateway.com/#/room/' + id; },
-      user_url (userId) { return 'https://chat.roleplaygateway.com/#/user/' + userId; },
-      msg_url (msg) { return 'https://chat.roleplaygateway.com/#/room/' + msg; },
-      group_url (group) { return 'https://chat.roleplaygateway.com/#/group/' + group; },
-      maturity: 'Stable',
-      comments: 'Founding community of Verse.'
-    }
+    RPG,
+    Grove,
+    VERSE,
+    Element
   ],
   unlinkable: [
-    {
-      name: 'Generic',
-      logo: 'images/fabric.png',
-      author: 'Fabric Labs',
-      homepage: 'fabric://fabric.pub',
-      maturity: 'Prototype',
-      room_instructions (alias) { return <span>Type <code>/join <b>{ alias }</b></code></span>; },
-      user_instructions (userId) { return <span>Type <code>/invite <b>{ userId }</b></code></span>; },
-      comments: 'Built-in Fabric link handler'
-    }
+    Generic
   ]
 };
 
@@ -230,34 +194,6 @@ export default React.createClass({
               </tr>
             </thead>
             <tbody>
-              { clients.linkable.map((client) => {
-                var link;
-                if (isRoom && client.room_url) {
-                  link = client.room_url(this.state.entity);
-                } else if (isRoomId && client.room_id_url) {
-                  link = client.room_id_url(this.state.entity);
-                } else if (isUser && client.user_url) {
-                  link = client.user_url(this.state.entity);
-                } else if (isMsg && client.msg_url) {
-                  link = client.msg_url(this.state.entity);
-                } else if (isGroup && client.group_url) {
-                  link = client.group_url(this.state.entity);
-                }
-                if (!link) return null;
-
-                return (
-                  <tr key={ client.name }>
-                    <td><a href={ link }><img inline className="ui tiny image" src={ client.logo }/></a></td>
-                    <td>
-                      <a href={ link }>{ client.name }</a>
-                      <div><a href={ client.homepage }>{ client.homepage }</a></div>
-                    </td>
-                    <td>{ client.comments }</td>
-                    <td><a href={ link } className="ui icon right labeled primary button">Open in {client.name}<i className="right chevron icon"></i></a></td>
-                  </tr>
-                );
-              }) }
-
               { clients.unlinkable.map((client) => {
                 var instructions;
 
@@ -293,6 +229,34 @@ export default React.createClass({
                   </tr>
                 );
               })}
+
+              { clients.linkable.map((client) => {
+                var link;
+                if (isRoom && client.room_url) {
+                  link = client.room_url(this.state.entity);
+                } else if (isRoomId && client.room_id_url) {
+                  link = client.room_id_url(this.state.entity);
+                } else if (isUser && client.user_url) {
+                  link = client.user_url(this.state.entity);
+                } else if (isMsg && client.msg_url) {
+                  link = client.msg_url(this.state.entity);
+                } else if (isGroup && client.group_url) {
+                  link = client.group_url(this.state.entity);
+                }
+                if (!link) return null;
+
+                return (
+                  <tr key={ client.name }>
+                    <td><a href={ link }><img inline className="ui tiny image" src={ client.logo }/></a></td>
+                    <td>
+                      <a href={ link }>{ client.name }</a>
+                      <div><a href={ client.homepage }>{ client.homepage }</a></div>
+                    </td>
+                    <td>{ client.comments }</td>
+                    <td><a href={ link } className="ui icon right labeled primary button">Open in {client.name}<i className="right chevron icon"></i></a></td>
+                  </tr>
+                );
+              }) }
             </tbody>
           </table>
         </div>
@@ -343,12 +307,12 @@ export default React.createClass({
               <tr>
                 <td>@</td>
                 <td>name</td>
-                <td><a href="https://maki.io/people/chrisinajar"><small className="subtle">@</small>chrisinajar</a></td>
+                <td><a href="https://maki.fabric.pub/people/chrisinajar"><small className="subtle">@</small>chrisinajar</a></td>
               </tr>
               <tr>
                 <td>#</td>
                 <td>topic</td>
-                <td><a href="https://maki.io/topics/learning"><small className="subtle">#</small>learning</a></td>
+                <td><a href="https://maki.fabric.pub/topics/learning"><small className="subtle">#</small>learning</a></td>
               </tr>
               <tr>
                 <td>$</td>
@@ -368,7 +332,7 @@ export default React.createClass({
               <tr>
                 <td>/</td>
                 <td>command</td>
-                <td><a href="/#/#idlerpg:verse.im"><small className="subtle">/</small>join <code>#idlerpg</code></a></td>
+                <td><a href="/#/#idlerpg:fabric.pub"><small className="subtle">/</small>join <code>#idlerpg</code></a></td>
               </tr>
             </tbody>
           </table>

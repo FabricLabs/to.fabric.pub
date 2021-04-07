@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import { render } from 'react-dom';
 
 // Client Definitions
 import Generic from '../clients/generic';
